@@ -14,7 +14,9 @@
   "devDependencies": {
     "@types/chai": "4.2.18",
     "@types/mocha": "8.2.2",
+    "@types/moment": "2.13.0",
     "@types/node": "15.6.0",
+    "moment": "2.29.1",
     "ts-node": "9.1.1"
   },
   "dependencies": {

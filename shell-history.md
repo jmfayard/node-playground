@@ -1,3 +1,5 @@
+npm install @types/moment --save-dev
+npm install moment --save-dev
 npm run test:watch
 npm run test
 npm install @types/chai @types/mocha --save-dev
