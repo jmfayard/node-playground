@@ -12,7 +12,7 @@ class UserClass {
     private user: User;
 
     constructor(user: User) {
-        this.user = user
+        this.user = user;
     }
 
     isAdult() {

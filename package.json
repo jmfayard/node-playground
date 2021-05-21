@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r ts-node/register ./**/*.spec.ts",
-    "test:watch": "mocha -r ts-node/register **/*.spec.ts --watch --watch-extensions **/*.ts ",
+    "test": "mocha",
+    "test:watch": "mocha --watch",
     "try": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
