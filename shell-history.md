@@ -1,3 +1,6 @@
+typac showdown
+npm install -g typac
+rm -rf node_modules && npm install
 npm install @types/moment --save-dev
 npm install moment --save-dev
 npm run test:watch
@@ -9,3 +12,4 @@ npx tsc --init
 npm install -D ts-node
 npm install -D @types/node
 npm install -g typescript
+
