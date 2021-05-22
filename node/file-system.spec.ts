@@ -15,6 +15,13 @@ describe('fs node api', function () {
         expect(buffer.toString()).to.eq(groceries)
     });
 
+    it('read file lines', async function () {
+        const fileHandle: FileHandle = await fs.open('res/groceries.txt', 'r')
+        const buffer = await fileHandle.readFile()
+        const lines = buffer.toString("utf-8").split('\n')
+        expect(lines).to.include('- apple').and.to.include('- lemon')
+    });
+
     it('reads a directory', async function () {
         const dir: Dir = await fs.opendir('res', {encoding: "utf-8"})
         let entries: Dirent[] = []

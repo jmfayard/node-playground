@@ -8,7 +8,7 @@ import {gql, request} from "graphql-request";
  */
 describe('GraphQL', function () {
 
-    it('should fetch movies', async function () {
+    it.skip('should fetch movies', async function () {
         const result = await request('https://tmdb.apps.quintero.io', query)
         expect(result.error).to.be.undefined
         const transform: string[] = result.search.edges.map(
