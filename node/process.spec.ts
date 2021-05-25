@@ -9,9 +9,9 @@ describe('Process', function () {
     });
 
     it('argv argv0 arch ', function () {
-        expect(process.argv).to.eq('node')
+        expect(process.argv0).to.eq('node')
         expect(process.argv[1]).to.contain('mocha')
-        expect(process.arch).to.be('x64')
+        expect(process.arch).to.eq('x64')
         expect(process.pid).to.be.greaterThan(1)
     });
 });
