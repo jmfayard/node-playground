@@ -1,5 +1,5 @@
 import {describe} from "mocha";
-import { expect } from 'chai';
+import {expect} from 'chai';
 import moment from "moment";
 
 describe('MomentJS handle dates', () => {

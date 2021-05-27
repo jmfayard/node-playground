@@ -1,4 +1,4 @@
-import {beforeEach, describe} from "mocha";
+import {describe} from "mocha";
 import {expect} from 'chai';
 import * as http from "http";
 import {Agent} from "http";

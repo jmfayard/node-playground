@@ -1,8 +1,8 @@
 import {FileHandle} from "fs/promises";
+import {expect} from 'chai';
+import {constants, Dir, Dirent} from "fs";
 
 const fs = require('fs/promises');
-import { expect } from 'chai';
-import {constants, Dir, Dirent} from "fs";
 
 // https://nodejs.org/dist/latest-v14.x/docs/api/fs.html
 describe('fs node api', function () {

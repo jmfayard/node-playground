@@ -35,11 +35,13 @@ query {
   }
 }
 `
+
 interface Node {
     __typename: string,
     cursor: string,
     node: Movie,
 }
+
 interface Movie {
     __typename: string,
     title: string,

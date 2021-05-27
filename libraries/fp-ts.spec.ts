@@ -1,9 +1,8 @@
 import {pipe} from "fp-ts/function";
 import * as TE from "fp-ts/lib/TaskEither";
-import * as E from "fp-ts/lib/Either";
-
 import {TaskEither} from "fp-ts/lib/TaskEither";
-import { expect } from 'chai';
+import * as E from "fp-ts/lib/Either";
+import {expect} from 'chai';
 
 /**
  * [Introduction - fp-ts](https://gcanti.github.io/fp-ts/)
@@ -29,7 +28,7 @@ describe('fp-ts : function programming in typescript', function () {
         const user$ = pipe(
             42,
             fetchUserName
-            )
+        )
         expect(await user$()).to.deep.equal(E.right('User 42'))
     })
 

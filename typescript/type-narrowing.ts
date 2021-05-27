@@ -28,7 +28,6 @@ describe('Narrowing of union types', function () {
     }
 
 
-
     it('in narrowing', function () {
         const fish: Fish = {swim: () => 'water is good'};
         expect(move(fish)).to.be('water is good')
@@ -42,6 +41,7 @@ describe('Narrowing of union types', function () {
         // by analysis of the flow, here animal is a Bird
         return animal.fly();
     }
+
     type Fish = { swim: () => string };
     type Bird = { fly: () => string };
 
@@ -60,16 +60,18 @@ describe('Narrowing of union types', function () {
     function getSmallPet(): Fish | Bird { // <-- define a type predicate
         return {swim: () => 'water is good'};
     }
+
     function isFish(pet: Fish | Bird): pet is Fish {
         return (pet as Fish).swim !== undefined;
     }
 
     it('the never type', function () {
-        const shape: Shape = { kind: "square", sideLength: 10}
+        const shape: Shape = {kind: "square", sideLength: 10}
         expect(getArea(shape)).to.eq(100)
     });
 
     type Shape = Circle | Square;
+
     // type Shape = Circle | Square | Triangle; // <-- compilation error
 
     interface Circle {
@@ -98,8 +100,6 @@ describe('Narrowing of union types', function () {
                 return _exhaustiveCheck;
         }
     }
-
-
 
 
 });

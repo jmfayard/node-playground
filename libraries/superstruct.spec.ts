@@ -1,5 +1,5 @@
 import {describe} from "mocha";
-import { expect } from 'chai';
+import {expect} from 'chai';
 import {assert, number, object, string, StructError} from "superstruct";
 
 /**

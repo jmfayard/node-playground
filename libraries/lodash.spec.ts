@@ -1,6 +1,6 @@
 import {expect} from "chai";
 import _ from "lodash";
-import JSON = Mocha.reporters.JSON;
+
 
 describe('lodash - A modern JavaScript utility library', function () {
 

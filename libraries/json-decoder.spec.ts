@@ -1,18 +1,6 @@
 import {describe} from "mocha";
-import { expect } from 'chai';
-import {assert, number, object, Result, string, StructError} from "superstruct";
-import {
-    arrayDecoder,
-    Err,
-    ERR,
-    err,
-    nullDecoder,
-    numberDecoder,
-    objectDecoder,
-    ok,
-    OK,
-    stringDecoder
-} from "json-decoder";
+import {expect} from 'chai';
+import {arrayDecoder, Err, nullDecoder, numberDecoder, objectDecoder, stringDecoder} from "json-decoder";
 
 /**
  * Enforcing JSON Type Safety
@@ -27,7 +15,7 @@ describe('json-decoder enforces JSON Type safety', () => {
         expect(stringDecoder.decode("hello").type).to.eq('OK')
         expect(numberDecoder.decode(42).type).to.eq('OK')
         expect(nullDecoder.decode(null).type).to.eq('OK')
-        expect(arrayDecoder(numberDecoder).decode([1,2]).type).to.eq('OK')
+        expect(arrayDecoder(numberDecoder).decode([1, 2]).type).to.eq('OK')
     });
 
     it('fails on incorrect basic types', function () {
@@ -50,7 +38,7 @@ describe('json-decoder enforces JSON Type safety', () => {
 
 });
 
-type Pet = {name: string, age: number};
+type Pet = { name: string, age: number };
 const petDecoder = objectDecoder<Pet>({
     name: stringDecoder,
     age: numberDecoder,

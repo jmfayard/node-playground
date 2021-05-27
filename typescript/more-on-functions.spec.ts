@@ -1,6 +1,5 @@
 import {describe} from "mocha";
 import {expect} from 'chai';
-import {string} from "fp-ts";
 
 /**
  * https://www.typescriptlang.org/docs/handbook/2/functions.html

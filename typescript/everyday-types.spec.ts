@@ -1,6 +1,5 @@
 import {describe} from "mocha";
-import { expect } from 'chai';
-import exp from "constants";
+import {expect} from 'chai';
 
 /**
  * See https://www.typescriptlang.org/docs/handbook/2/everyday-types.html
@@ -12,7 +11,7 @@ describe('Everyday Types include', function () {
             first: string,
             last?: string
         }): string {
-            if (obj.last ==null) return obj.first
+            if (obj.last == null) return obj.first
             else return `${obj.first} ${obj.last}`
         }
 
@@ -32,7 +31,7 @@ describe('Everyday Types include', function () {
 
     it('Type Aliases', function () {
         function distanceFromZero(point: Point): number {
-            return Math.sqrt(point.x*point.x + point.y*point.y)
+            return Math.sqrt(point.x * point.x + point.y * point.y)
         }
 
         const point: Point = {x: 3, y: 4};
@@ -41,9 +40,10 @@ describe('Everyday Types include', function () {
     })
 
     it('Literal Types', function () {
-        function printText(s: string, alignment: "left" | "right" | "center") : string {
+        function printText(s: string, alignment: "left" | "right" | "center"): string {
             return `${s} (${alignment})`
         }
+
         function compare(a: string, b: string): -1 | 0 | 1 {
             return a === b ? 0 : a > b ? 1 : -1;
         }
@@ -55,4 +55,4 @@ describe('Everyday Types include', function () {
     });
 });
 
-type Point = { x: number, y:number }
+type Point = { x: number, y: number }

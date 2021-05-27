@@ -15,9 +15,11 @@ describe('memoized fibonacci', function () {
 });
 
 const memory: IHash = {}
+
 interface IHash {
     [key: number]: number
 }
+
 function fibM(n: number): number {
     if (memory.hasOwnProperty(n)) return memory[n]
     const compute = fib(n)
