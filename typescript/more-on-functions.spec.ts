@@ -73,5 +73,4 @@ describe('More on functions', function () {
         // const notOK = longest(10, 100);
     })
 
-
 });
