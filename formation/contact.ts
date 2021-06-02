@@ -1,5 +1,5 @@
 import chalk from "chalk"
-import exp from "constants";
+import * as fs from "fs";
 
 export interface ContactDto {
     id: number,
@@ -30,12 +30,16 @@ export class Contact {
     }
 }
 
+const doNothing = () => {}
 export class ContactService {
     _memoryCache: Contact[] = []
 
-    constructor() {
-        const objects: ContactDto[] = require('./contacts.json')
-        this._memoryCache = objects.map((dto) => new Contact((dto)))
+    constructor(private repository: ContactRepository, done: (() => void) = doNothing) {
+        repository.fetchContacts((err, result) => {
+            if (err != null) throw err
+            this._memoryCache = result.map((dto) => new Contact((dto)))
+            done()
+        })
     }
 
     get contacts() {
@@ -54,9 +58,40 @@ export class ContactService {
             console.log(message);
         })
     }
-
-
 }
+
+export type FsCallback<Type> =
+    (err: Error | null, result: Type) => void
+
+export interface ContactRepository {
+    fetchContacts(callback: FsCallback<ContactDto[]>): void
+}
+
+export const requireContactRepository: ContactRepository = {
+    fetchContacts(callback: FsCallback<ContactDto[]>) {
+        const objects: ContactDto[] = require('./contacts.json');
+        callback(null, objects)
+    }
+}
+
+
+export const fileSystemContactRepository: ContactRepository = {
+    fetchContacts(callback: FsCallback<ContactDto[]>) {
+        fs.readFile('formation/contacts.json', {encoding: "utf-8"}, (err, content) => {
+            if (err != null) {
+                callback(err, [])
+            } else {
+                callback(null, JSON.parse(content))
+            }
+        })
+    }
+}
+
+/**
+ *  fs.open('res/groceries.txt', 'r')
+ const buffer = await fileHandle.readFile()
+ const lines = buffer.toString("utf-8")
+ */
 
 export type PrintOptions = {
     colors: boolean

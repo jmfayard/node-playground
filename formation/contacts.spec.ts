@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {Contact, ContactService, PrintOptions} from "./contact";
+import {Contact, ContactService, fileSystemContactRepository, PrintOptions, requireContactRepository} from "./contact";
 import {Command} from "commander";
 
 
@@ -17,7 +17,7 @@ describe('works with contacts', function () {
     });
 
     it('prints contacts with the contact service', () => {
-        const service = new ContactService()
+        const service = new ContactService(requireContactRepository)
         service.print({} as PrintOptions)
     })
 
@@ -25,8 +25,15 @@ describe('works with contacts', function () {
         const program = parseProgramArgs(["node", "file", "--colors"])
         const options = program.opts();
         console.log("options=%O", options)
-        const service = new ContactService()
+        const service = new ContactService(requireContactRepository)
         service.print(options as PrintOptions)
+    });
+
+    it('use a repository to access the contacts', function () {
+        const service = new ContactService(fileSystemContactRepository, () => {
+            console.log('done getting contacts')
+            service.print({colors: true})
+        })
     });
 });
 
