@@ -5,6 +5,7 @@
   "main": "index.js",
   "module": "",
   "scripts": {
+    "cli": "npx ts-node cli.ts",
     "test": "mocha",
     "test:watch": "mocha --watch"
   },
