@@ -1,4 +1,7 @@
 import {expect} from 'chai';
+import {Contact, ContactService, PrintOptions} from "./contact";
+import {Command} from "commander";
+
 
 const data: Contact[] = require('./contacts.json')
 
@@ -15,54 +18,21 @@ describe('works with contacts', function () {
 
     it('prints contacts with the contact service', () => {
         const service = new ContactService()
-        service.print()
+        service.print({} as PrintOptions)
     })
+
+    it('can parse arguments', function () {
+        const program = parseProgramArgs(["node", "file", "--colors"])
+        const options = program.opts();
+        console.log("options=%O", options)
+        const service = new ContactService()
+        service.print(options as PrintOptions)
+    });
 });
 
-interface ContactDto {
-    id: number,
-    firstName: string,
-    lastName: string,
-    address: string,
-    phone: string
-}
-
-class Contact {
-    id: number
-    firstName: string
-    lastName: string
-    address: string
-    phone: string
-
-    constructor({id, firstName, lastName, address, phone}: ContactDto) {
-        this.id = id
-        this.firstName = firstName
-        this.lastName = lastName
-        this.address = address
-        this.phone = phone
-    }
-
-    toString(): string {
-        const {id, firstName, lastName, address, phone} = this
-        return JSON.stringify({id, firstName, lastName, address, phone})
-    }
-}
-
-class ContactService {
-    _memoryCache: Contact[] = []
-
-    constructor() {
-        const objects: ContactDto[] = require('./contacts.json')
-        this._memoryCache = objects.map((dto) => new Contact((dto)))
-    }
-
-    get contacts() {
-        return this._memoryCache
-    }
-
-    print() {
-        this._memoryCache.forEach((c) => console.log(c.toString()))
-    }
-
-
+function parseProgramArgs(argv: string[]): Command {
+    const program: any = new Command();
+    program.option('--colors', "use colors")
+    program.parse(argv)
+    return program as Command
 }
