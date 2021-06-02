@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "module": "",
   "scripts": {
     "test": "mocha",
     "test:watch": "mocha --watch"
@@ -28,9 +29,11 @@
     "@types/pluralize": "0.0.29",
     "chai": "4.3.4",
     "chalk": "4.1.1",
+    "commander": "7.2.0",
     "fp-ts": "2.10.5",
     "graphql": "15.5.0",
     "graphql-request": "3.4.0",
+    "install": "0.13.0",
     "jsdom": "16.5.3",
     "json-decoder": "1.4.0",
     "lodash": "4.17.21",

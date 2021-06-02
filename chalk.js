@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-let chalk = require("chalk");
-chalk = chalk.bgGray.bold;
+const {Contact, ContactService} = require("formation/contact");
 
-console.log(chalk.blueBright("  FR") + chalk.white("AN") + chalk.red("CE  "))
+ContactService().print()
