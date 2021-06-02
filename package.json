@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "4.2.18",
+    "@types/chalk": "2.2.0",
     "@types/jsdom": "16.2.10",
     "@types/lodash": "4.14.170",
     "@types/mocha": "8.2.2",
@@ -26,6 +27,7 @@
     "@types/graphql": "14.5.0",
     "@types/pluralize": "0.0.29",
     "chai": "4.3.4",
+    "chalk": "4.1.1",
     "fp-ts": "2.10.5",
     "graphql": "15.5.0",
     "graphql-request": "3.4.0",

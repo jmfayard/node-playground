@@ -1,4 +1,4 @@
-typac showdown
+npm outdated typac showdown
 npm install -g typac
 rm -rf node_modules && npm install
 npm install @types/moment --save-dev
