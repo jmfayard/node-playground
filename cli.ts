@@ -1,14 +1,13 @@
 #!/usr/bin/env ts-node
 
 import {
-    Contact, ContactDto,
-    ContactService,
-    fileSystemContactRepository,
-    PrintOptions,
-    requireContactRepository
+    Contact
 } from "./formation/contact";
 import {Command} from "commander";
 import common from "mocha/lib/interfaces/common";
+import {ContactDto} from "./formation/contactDto";
+import {ContactService, PrintOptions} from "./formation/contactService";
+import {fileSystemContactRepository, requireContactRepository} from "./formation/contactRepository";
 
 const program: any = new Command();
 program.requiredOption('--action <action>', "add|delete|print")

@@ -1,6 +1,8 @@
 import {expect} from 'chai';
-import {Contact, ContactService, fileSystemContactRepository, PrintOptions, requireContactRepository} from "./contact";
+import {Contact} from "./contact";
 import {Command} from "commander";
+import {ContactService, PrintOptions} from "./contactService";
+import {fileSystemContactRepository, requireContactRepository} from "./contactRepository";
 
 
 const data: Contact[] = require('./contacts.json')
