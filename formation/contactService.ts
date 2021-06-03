@@ -14,11 +14,9 @@ export class ContactService {
     constructor(private repository: ContactRepository) {
     }
 
-    fetch(): Promise<void> {
-        return this.repository.fetchContacts()
-            .then((contacts) => {
-                this._memoryCache = contacts.map((dto) => new Contact((dto)))
-            })
+    async fetch(): Promise<void> {
+        const contacts = await this.repository.fetchContacts()
+        this._memoryCache = contacts.map((dto) => new Contact((dto)))
     }
 
     get contacts() {
@@ -42,30 +40,29 @@ export class ContactService {
         })
     }
 
-    add(contact: Contact): Promise<void> {
+    async add(contact: Contact) {
         this._memoryCache.push(contact)
-        return this.repository.write(this.contacts)
+        await this.repository.write(this.contacts)
     }
 
-    delete(contactId: number): Promise<void> {
+    async delete(contactId: number): Promise<void> {
         this._memoryCache = this._memoryCache.filter((value, index) => value.id != contactId)
-        return this.repository.write(this.contacts)
+        await this.repository.write(this.contacts)
     }
 
 
-    execute(v: { 'action': string, 'firstName': string, 'id': string, 'lastName': string, 'colors': boolean })
-    : Promise<void> {
+    async execute(v: { 'action': string, 'firstName': string, 'id': string, 'lastName': string, 'colors': boolean })
+        : Promise<void> {
         const command = v['action']
         if (command == 'add') {
             const contactDto = {...v, "id": parseInt(v.id)} as unknown as ContactDto
             const contact = new Contact(contactDto)
-            return this.add(contact)
+            await this.add(contact)
         } else if (command == 'delete') {
-            return this.delete(parseInt(v['id']))
+            await this.delete(parseInt(v['id']))
         } else if (command != 'list') {
             console.log('Invalid parameter --action=' + command)
         }
         this.print({colors: v['colors']})
-        return Promise.resolve(undefined)
     }
 }

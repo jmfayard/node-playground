@@ -12,9 +12,10 @@ program.option('--lastName <lastName>', 'lastName')
 program.option('--firstName <firstName>', 'firstNameName')
 program.parse(process.argv);
 
-const service = new ContactService(fileSystemContactRepository)
-service.fetch()
-    .then(() => service.execute(program.opts()))
-    .catch((error => {
-        throw error
-    }));
+
+async function main() {
+    const service = new ContactService(fileSystemContactRepository)
+    await service.fetch()
+    await service.execute(program.opts())
+}
+main()

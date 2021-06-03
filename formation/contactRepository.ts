@@ -9,23 +9,22 @@ export interface ContactRepository {
 }
 
 export const requireContactRepository: ContactRepository = {
-    write(_: Contact[]): Promise<void> {
+    async write(_: Contact[]): Promise<void> {
         return Promise.reject(new Error("Cannot write contacts with requireContactRepository"));
     },
-    fetchContacts(): Promise<ContactDto[]> {
-        const objects: ContactDto[] = require('./contacts.json');
-        return Promise.resolve(objects);
+    async fetchContacts(): Promise<ContactDto[]> {
+        return require('./contacts.json');
     }
 }
 const FILE = 'formation/contacts.json'
 export const fileSystemContactRepository: ContactRepository = {
 
-    write(contacts: Contact[]): Promise<void> {
-        return fs.writeFile(FILE, JSON.stringify(contacts, null, "    "))
+    async write(contacts: Contact[]): Promise<void> {
+        await fs.writeFile(FILE, JSON.stringify(contacts, null, "    "))
     },
 
-    fetchContacts(): Promise<ContactDto[]> {
-        return fs.readFile(FILE, {encoding: "utf-8"})
-            .then(content => JSON.parse(content))
+    async fetchContacts(): Promise<ContactDto[]> {
+        const content = await fs.readFile(FILE, {encoding: "utf-8"})
+        return JSON.parse(content)
     }
 }
