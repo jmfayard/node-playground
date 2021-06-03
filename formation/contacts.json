@@ -1,56 +1,66 @@
 [
-  {
-    "id": 0,
-    "firstName": "Bruce",
-    "lastName": "Wayne",
-    "address": "Gotham city",
-    "phone": "555-BATMAN"
-  },
-  {
-    "id": 1,
-    "firstName": "Peter",
-    "lastName": "Parker",
-    "address": "New York",
-    "phone": "555-SPDRMN"
-  },
-  {
-    "id": 2,
-    "firstName": "Jane",
-    "lastName": "Storm",
-    "address": "Baxter building, New York",
-    "phone": "555-INVGRL"
-  },
-  {
-    "id": 3,
-    "firstName": "Red",
-    "lastName": "Richards",
-    "address": "Baxter building, New York",
-    "phone": "555-MRFANT"
-  },
-  {
-    "id": 4,
-    "firstName": "Johnny",
-    "lastName": "Storm",
-    "address": "Baxter building, New York",
-    "phone": "555-TORCH"
-  },
-  {
-    "id": 5,
-    "firstName": "Benjamin",
-    "lastName": "Grimm",
-    "address": "Baxter building, New York",
-    "phone": "555-THING"
-  },
-  {
-    "id": 6,
-    "firstName": "Matt",
-    "lastName": "Murdock",
-    "address": "San Francisco",
-    "phone": "555-DARDVL"
-  },
-  {
-    "id": 11,
-    "firstName": "Jean-Michel",
-    "lastName": "Fayard"
-  }
+    {
+        "id": 0,
+        "firstName": "Bruce",
+        "lastName": "Wayne",
+        "address": "Gotham city",
+        "phone": "555-BATMAN"
+    },
+    {
+        "id": 1,
+        "firstName": "Peter",
+        "lastName": "Parker",
+        "address": "New York",
+        "phone": "555-SPDRMN"
+    },
+    {
+        "id": 2,
+        "firstName": "Jane",
+        "lastName": "Storm",
+        "address": "Baxter building, New York",
+        "phone": "555-INVGRL"
+    },
+    {
+        "id": 3,
+        "firstName": "Red",
+        "lastName": "Richards",
+        "address": "Baxter building, New York",
+        "phone": "555-MRFANT"
+    },
+    {
+        "id": 4,
+        "firstName": "Johnny",
+        "lastName": "Storm",
+        "address": "Baxter building, New York",
+        "phone": "555-TORCH"
+    },
+    {
+        "id": 5,
+        "firstName": "Benjamin",
+        "lastName": "Grimm",
+        "address": "Baxter building, New York",
+        "phone": "555-THING"
+    },
+    {
+        "id": 6,
+        "firstName": "Matt",
+        "lastName": "Murdock",
+        "address": "San Francisco",
+        "phone": "555-DARDVL"
+    },
+    {
+        "id": 11,
+        "firstName": "Jean-Michel",
+        "lastName": "Fayard"
+    },
+    {
+        "id": 11,
+        "firstName": "Jean-Michel",
+        "lastName": "Fayard"
+    },
+    {
+        "id": 42,
+        "firstName": "Patrick",
+        "lastName": "Fayard"
+    }
 ]

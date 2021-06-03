@@ -1,11 +1,10 @@
-import {Request, Response} from "express";
+import express, {NextFunction, Request, Response} from "express";
 import {ContactService} from "../formation/contactService";
 import {fileSystemContactRepository} from "../formation/contactRepository";
 import bodyParser from 'body-parser'
 import {Contact} from "../formation/contact";
 import {ContactDto} from "../formation/contactDto";
 import {createHash} from "crypto"
-import express from "express"
 
 
 const app = express()
@@ -13,11 +12,23 @@ const app = express()
 
 const API = '/rest/contacts'
 
-const service = new ContactService(fileSystemContactRepository, () => {
+const service = new ContactService(fileSystemContactRepository)
+
+function clientErrorHandler(err: any, req: any, res: any, next: any) {
+    if (err) {
+        res.status(400)
+        res.send({message: err});
+    } else {
+        next(err)
+    }
+}
+
+service.fetch().then(() => {
     console.log(service.contacts.length + ' contacts loaded')
     console.log('Open http://localhost:3000/hello')
     console.log('Open http://localhost:3000/id')
     console.log(`Open http://localhost:3000${API}`)
+    app.use(clientErrorHandler)
     app.listen(3000)
 })
 
@@ -32,40 +43,40 @@ app.get(API, (req: Request, res: Response) => {
     res.send(service.contacts)
 })
 
-app.post(API, (req: Request, res: Response) => {
+app.post(API, (req: Request, res: Response, next: NextFunction) => {
     console.log('POST new contact %O', req.body)
     const contactDto = req.body as ContactDto
     const contact = new Contact(contactDto)
-    service.add(contact, () => {
-        res.send(contact)
-    })
+    service.add(contact)
+        .then(() => res.send(contact))
+        .catch(next)
 })
 
-app.delete(`${API}/:id`, (req: Request, res: Response) => {
+app.delete(`${API}/:id`, (req: Request, res: Response, next: NextFunction) => {
     const id = parseInt(req.params.id);
-    console.log(`Delete contact ${id}` )
-    service.delete(id, () => {
+    console.log(`Delete contact ${id}`)
+    service.delete(id).then(() => {
         res.status(204)
         res.send('')
-    })
+    }).catch(next);
 });
 
-app.put(`${API}/:id`, (req: Request, res: Response) => {
+app.put(`${API}/:id`, (req: Request, res: Response, next: NextFunction) => {
     console.log('PUT contact %O', req.body)
     const id = parseInt(req.params.id);
     const contactDto = req.body as ContactDto
     const contact = new Contact(contactDto)
     if (id != contact.id) {
         res.status(400)
-        res.send({ message: "incoherent contactId" })
+        res.send({message: "incoherent contactId"})
         return
     }
-    service.delete(id, () => {
-        service.add(contact, () => {
+    service.delete(id)
+        .then(() => service.add(contact))
+        .then(() => {
             res.send(contact)
-        })
-    })
-});
+        }).catch(next);
+})
 
 
 app.get(`${API}/:id`, (req: Request, res: Response) => {

@@ -3,8 +3,6 @@ import {ContactDto} from "./contactDto";
 import {Contact} from "./contact";
 import {ContactRepository} from "./contactRepository";
 
-const doNothing = () => {
-}
 
 export type PrintOptions = {
     colors: boolean
@@ -13,12 +11,14 @@ export type PrintOptions = {
 export class ContactService {
     _memoryCache: Contact[] = []
 
-    constructor(private repository: ContactRepository, done: (() => void) = doNothing) {
-        repository.fetchContacts((err, result) => {
-            if (err != null) throw err
-            this._memoryCache = result.map((dto) => new Contact((dto)))
-            done()
-        })
+    constructor(private repository: ContactRepository) {
+    }
+
+    fetch(): Promise<void> {
+        return this.repository.fetchContacts()
+            .then((contacts) => {
+                this._memoryCache = contacts.map((dto) => new Contact((dto)))
+            })
     }
 
     get contacts() {
@@ -42,32 +42,30 @@ export class ContactService {
         })
     }
 
-    add(contact: Contact, callback: FsCallback<void>): void {
+    add(contact: Contact): Promise<void> {
         this._memoryCache.push(contact)
-        this.repository.write(this.contacts, callback)
+        return this.repository.write(this.contacts)
     }
 
-    delete(contactId: number, callback: FsCallback<void>): void {
+    delete(contactId: number): Promise<void> {
         this._memoryCache = this._memoryCache.filter((value, index) => value.id != contactId)
-        this.repository.write(this.contacts, callback)
+        return this.repository.write(this.contacts)
     }
 
 
-    execute(v: { 'action': string, 'firstName': string, 'id': string, 'lastName': string, 'colors': boolean },
-            callback: FsCallback<void>) {
+    execute(v: { 'action': string, 'firstName': string, 'id': string, 'lastName': string, 'colors': boolean })
+    : Promise<void> {
         const command = v['action']
         if (command == 'add') {
             const contactDto = {...v, "id": parseInt(v.id)} as unknown as ContactDto
             const contact = new Contact(contactDto)
-            this.add(contact, callback)
+            return this.add(contact)
         } else if (command == 'delete') {
-            this.delete(parseInt(v['id']), callback)
+            return this.delete(parseInt(v['id']))
         } else if (command != 'list') {
             console.log('Invalid parameter --action=' + command)
         }
         this.print({colors: v['colors']})
+        return Promise.resolve(undefined)
     }
 }
-
-export type FsCallback<Type> =
-    (err: Error | null, result: Type) => void

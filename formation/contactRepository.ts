@@ -1,39 +1,31 @@
-import {FsCallback} from "./contactService";
-import fs from "fs";
+import fs from "fs/promises";
 import {ContactDto} from "./contactDto";
 import {Contact} from "./contact";
 
 export interface ContactRepository {
-    fetchContacts(callback: FsCallback<ContactDto[]>): void
+    fetchContacts(): Promise<ContactDto[]>
 
-    write(contacts: Contact[], callback: FsCallback<void>): void
+    write(contacts: Contact[]): Promise<void>
 }
 
 export const requireContactRepository: ContactRepository = {
-    write(contacts: Contact[], callback: FsCallback<void>): void {
-        throw new Error("Cannot write contacts with requireContactRepository")
+    write(_: Contact[]): Promise<void> {
+        return Promise.reject(new Error("Cannot write contacts with requireContactRepository"));
     },
-    fetchContacts(callback: FsCallback<ContactDto[]>) {
+    fetchContacts(): Promise<ContactDto[]> {
         const objects: ContactDto[] = require('./contacts.json');
-        callback(null, objects)
+        return Promise.resolve(objects);
     }
 }
 const FILE = 'formation/contacts.json'
 export const fileSystemContactRepository: ContactRepository = {
 
-    write(contacts: Contact[], callback: FsCallback<void>): void {
-        fs.writeFile(FILE, JSON.stringify(contacts), err => {
-            callback(err, undefined)
-        })
+    write(contacts: Contact[]): Promise<void> {
+        return fs.writeFile(FILE, JSON.stringify(contacts, null, "    "))
     },
 
-    fetchContacts(callback: FsCallback<ContactDto[]>) {
-        fs.readFile(FILE, {encoding: "utf-8"}, (err, content) => {
-            if (err != null) {
-                callback(err, [])
-            } else {
-                callback(null, JSON.parse(content))
-            }
-        })
+    fetchContacts(): Promise<ContactDto[]> {
+        return fs.readFile(FILE, {encoding: "utf-8"})
+            .then(content => JSON.parse(content))
     }
 }

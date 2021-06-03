@@ -1,4 +1,4 @@
-DELETE http://localhost:3000/rest/contacts/42
+DELETE http://localhost:3000/rest/contacts/abcd
 
 
 ###
