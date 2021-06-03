@@ -5,7 +5,7 @@ import {ContactService, PrintOptions} from "./contactService";
 import {fileSystemContactRepository, requireContactRepository} from "./contactRepository";
 
 
-const data: Contact[] = require('./contacts.json')
+const data: Contact[] = require('./contacts-initial.json')
 
 describe('works with contacts', function () {
 
@@ -15,7 +15,7 @@ describe('works with contacts', function () {
     });
 
     it('reads the 8 contacts', function () {
-        expect(data.map((c) => c.id)).to.deep.eq([0, 1, 2, 3, 4, 5, 6, 7])
+        expect(data.map((c) => c.id)).to.deep.eq([0, 1, 2, 3, 4, 5, 6])
     });
 
     it('prints contacts with the contact service', () => {
@@ -31,12 +31,12 @@ describe('works with contacts', function () {
         service.print(options as PrintOptions)
     });
 
-    it('use a repository to access the contacts', function () {
-        const service = new ContactService(fileSystemContactRepository, () => {
-            console.log('done getting contacts')
-            service.print({colors: true})
-        })
-    });
+    it('use a repository to access the contacts', async function () {
+        const service = new ContactService(fileSystemContactRepository)
+        await service.fetch()
+        console.log('done getting contacts')
+        service.print({colors: true})
+    })
 });
 
 function parseProgramArgs(argv: string[]): Command {
