@@ -25,6 +25,10 @@ export class ContactService {
         return this._memoryCache
     }
 
+    contactsById(id: number) {
+        return this._memoryCache.find((c: Contact) => c.id == id)
+    }
+
     print({colors = false}: PrintOptions) {
         const formatter = chalk.bgGray.bold
         this._memoryCache.forEach((c) => {

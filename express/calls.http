@@ -1,0 +1,49 @@
+DELETE http://localhost:3000/rest/contacts/42
+
+
+###
+POST http://localhost:3000/rest/contacts
+Content-Type: application/json
+
+{
+  "id": 42,
+  "firstName": "Marie-Claire",
+  "lastName": "Fayard"
+}
+
+
+###
+PUT http://localhost:3000/rest/contacts/42
+Content-Type: application/json
+
+{
+  "id": 42,
+  "firstName": "Patrick",
+  "lastName": "Fayard"
+}
+
+
+###
+PUT http://localhost:3000/rest/contacts/42
+Content-Type: application/json
+
+{
+  "id": 23,
+  "firstName": "Patrick",
+  "lastName": "Fayard"
+}
+
+###
+GET localhost:3000/hello
+
+###
+GET  localhost:3000/rest/contacts
+Accept: application/json
+
+###
+GET localhost:3000/rest/contacts/1
+Accept: application/json
+
+###
+GET localhost:3000/rest/contacts/42
+Accept: application/json
