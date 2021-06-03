@@ -4,8 +4,8 @@ import {fileSystemContactRepository} from "../formation/contactRepository";
 import bodyParser from 'body-parser'
 import {Contact} from "../formation/contact";
 import {ContactDto} from "../formation/contactDto";
-
-const express = require("express")
+import {createHash} from "crypto"
+import express from "express"
 
 
 const app = express()
@@ -16,6 +16,7 @@ const API = '/rest/contacts'
 const service = new ContactService(fileSystemContactRepository, () => {
     console.log(service.contacts.length + ' contacts loaded')
     console.log('Open http://localhost:3000/hello')
+    console.log('Open http://localhost:3000/id')
     console.log(`Open http://localhost:3000${API}`)
     app.listen(3000)
 })
@@ -80,4 +81,9 @@ app.get(`${API}/:id`, (req: Request, res: Response) => {
     }
 })
 
-
+app.get('/id', (req: Request, res: Response) => {
+    const hash = createHash('sha256')
+    hash.update(JSON.stringify(req.body))
+    const result = hash.digest()
+    res.send(result.toString("hex"))
+})
