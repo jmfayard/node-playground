@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
 import {
-    Contact,
+    Contact, ContactDto,
     ContactService,
     fileSystemContactRepository,
     PrintOptions,

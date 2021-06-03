@@ -65,23 +65,20 @@ export class ContactService {
     }
 
     delete(contactId: number, callback: FsCallback<void>): void {
-        // FIXME: delete not working
-        this._memoryCache = this._memoryCache.filter((value, index) => {
-            console.log(value)
-            value.id != contactId
-        })
+        this._memoryCache = this._memoryCache.filter((value, index) => value.id != contactId)
         this.repository.write(this.contacts, callback)
     }
 
 
-    execute(v: { 'action': string, 'firstName': string, 'id': number, 'lastName': string, 'colors': boolean },
+    execute(v: { 'action': string, 'firstName': string, 'id': string, 'lastName': string, 'colors': boolean },
             callback: FsCallback<void>) {
         const command = v['action']
         if (command == 'add') {
-            const contact = new Contact(v as unknown as ContactDto)
+            const contactDto = {...v, "id": parseInt(v.id)} as unknown as ContactDto
+            const contact = new Contact(contactDto)
             this.add(contact, callback)
         } else if (command == 'delete') {
-            this.delete(v['id'], callback)
+            this.delete(parseInt(v['id']), callback)
         } else if (command != 'list') {
             console.log('Invalid parameter --action=' + command)
         }
