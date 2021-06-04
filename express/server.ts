@@ -5,12 +5,38 @@ import bodyParser from 'body-parser'
 import {Contact} from "../formation/contact";
 import {ContactDto} from "../formation/contactDto";
 import {createHash} from "crypto"
-
+import * as http from "http";
+import {Server} from "socket.io"
 
 const app = express()
     .use(bodyParser.json())
+    .use('/public', express.static('express/public'))
 
 const API = '/rest/contacts'
+
+const server = http.createServer(app)
+const io = new Server(server, {
+    cors: {
+        origin: true,
+    },
+})
+
+
+// Server
+io.on("connection", (socket) => {
+    socket.on("hello", (name) => {
+        if (name) {
+            console.log(`Hello de ${name} depuis le client`)
+        } else {
+            console.log("Hello du client")
+        }
+        socket.emit("hello", name)
+    })
+})
+
+io.on('hello', (contacts) => {
+    console.log("%O", contacts)
+})
 
 const service = new ContactService(fileSystemContactRepository)
 
@@ -48,7 +74,10 @@ app.post(API, (req: Request, res: Response, next: NextFunction) => {
     const contactDto = req.body as ContactDto
     const contact = new Contact(contactDto)
     service.add(contact)
-        .then(() => res.send(contact))
+        .then(() => {
+            io.emit('contacts', service.contacts)
+            res.send(contact)
+        })
         .catch(next)
 })
 
@@ -56,6 +85,7 @@ app.delete(`${API}/:id`, (req: Request, res: Response, next: NextFunction) => {
     const id = parseInt(req.params.id);
     console.log(`Delete contact ${id}`)
     service.delete(id).then(() => {
+        io.emit('contacts', service.contacts)
         res.status(204)
         res.send('')
     }).catch(next);
@@ -74,6 +104,7 @@ app.put(`${API}/:id`, (req: Request, res: Response, next: NextFunction) => {
     service.delete(id)
         .then(() => service.add(contact))
         .then(() => {
+            io.emit('contacts', service.contacts)
             res.send(contact)
         }).catch(next);
 })
