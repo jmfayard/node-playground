@@ -8,7 +8,8 @@
     "cli": "npx ts-node cli.ts",
     "test": "mocha",
     "test:watch": "mocha --watch",
-    "express": "npx ts-node express/server.ts"
+    "express": "npx ts-node express/server.ts",
+    "cluster": "npx ts-node express/cluster.ts"
   },
   "keywords": [],
   "author": "",

@@ -7,6 +7,7 @@ import {ContactDto} from "../formation/contactDto";
 import {createHash} from "crypto"
 import * as http from "http";
 import {Server} from "socket.io"
+import * as cluster from "cluster";
 
 const app = express()
     .use(bodyParser.json())
@@ -35,19 +36,10 @@ io.on("connection", (socket) => {
 })
 
 io.on('hello', (contacts) => {
-    console.log("%O", contacts)
+    console.log(`#${cluster.worker.id} %O`, contacts)
 })
 
 const service = new ContactService(fileSystemContactRepository)
-
-function clientErrorHandler(err: any, req: any, res: any, next: any) {
-    if (err) {
-        res.status(400)
-        res.send({message: err});
-    } else {
-        next(err)
-    }
-}
 
 service.fetch().then(() => {
     console.log(service.contacts.length + ' contacts loaded')
@@ -60,8 +52,8 @@ service.fetch().then(() => {
 
 
 app.get('/hello', (req: Request, res: Response) => {
-    console.log('GET /hello')
-    res.send("Hello World")
+    console.log(`#${cluster.worker.id} GET /hello`)
+    res.send(`#${cluster.worker.id} Hello World`)
 })
 
 app.get(API, (req: Request, res: Response) => {
@@ -136,3 +128,13 @@ app.get('/id', (req: Request, res: Response) => {
     const result = hash.digest()
     res.send(result.toString("hex"))
 })
+
+
+function clientErrorHandler(err: any, req: any, res: any, next: any) {
+    if (err) {
+        res.status(400)
+        res.send({message: err});
+    } else {
+        next(err)
+    }
+}
