@@ -28,3 +28,4 @@ export const fileSystemContactRepository: ContactRepository = {
         return JSON.parse(content)
     }
 }
+

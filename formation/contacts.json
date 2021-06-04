@@ -102,14 +102,24 @@
         "lastName": "Dubrulle",
         "address": "grandpa"
     },
-    {
-        "firstName": "sdf",
-        "lastName": "sdf",
-        "address": "qfds"
-    },
-    {
-        "firstName": "patrick",
-        "lastName": "fayard",
-        "address": "coucouu"
-    }
+  {
+    "firstName": "sdf",
+    "lastName": "sdf",
+    "address": "qfds"
+  },
+  {
+    "firstName": "patrick",
+    "lastName": "fayard",
+    "address": "coucouu"
+  },
+  {
+    "firstName": "Asterix",
+    "lastName": "Milou",
+    "address": "Iokundoko?"
+  },
+  {
+    "firstName": "Kaoru",
+    "lastName": "Sant",
+    "address": "doko?"
+  }
 ]

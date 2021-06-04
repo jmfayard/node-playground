@@ -69,29 +69,34 @@ app.get(API, (req: Request, res: Response) => {
     res.send(service.contacts)
 })
 
-app.post(API, (req: Request, res: Response, next: NextFunction) => {
+app.post(API, async (req: Request, res: Response, next: NextFunction) => {
     console.log('POST new contact %O', req.body)
     const contactDto = req.body as ContactDto
     const contact = new Contact(contactDto)
-    service.add(contact)
-        .then(() => {
-            io.emit('contacts', service.contacts)
-            res.send(contact)
-        })
-        .catch(next)
+
+    try {
+        await service.add(contact);
+        io.emit('contacts', service.contacts);
+        res.send(contact);
+    } catch (err) {
+        next(err);
+    }
 })
 
-app.delete(`${API}/:id`, (req: Request, res: Response, next: NextFunction) => {
+app.delete(`${API}/:id`, async (req: Request, res: Response, next: NextFunction) => {
     const id = parseInt(req.params.id);
     console.log(`Delete contact ${id}`)
-    service.delete(id).then(() => {
+    try {
+        await service.delete(id)
         io.emit('contacts', service.contacts)
         res.status(204)
         res.send('')
-    }).catch(next);
+    } catch (e) {
+        next(e)
+    }
 });
 
-app.put(`${API}/:id`, (req: Request, res: Response, next: NextFunction) => {
+app.put(`${API}/:id`, async (req: Request, res: Response, next: NextFunction) => {
     console.log('PUT contact %O', req.body)
     const id = parseInt(req.params.id);
     const contactDto = req.body as ContactDto
@@ -101,12 +106,14 @@ app.put(`${API}/:id`, (req: Request, res: Response, next: NextFunction) => {
         res.send({message: "incoherent contactId"})
         return
     }
-    service.delete(id)
-        .then(() => service.add(contact))
-        .then(() => {
-            io.emit('contacts', service.contacts)
-            res.send(contact)
-        }).catch(next);
+    try {
+        await service.delete(id);
+        await service.add(contact);
+        io.emit('contacts', service.contacts);
+        res.send(contact);
+    } catch (e) {
+        next(e)
+    }
 })
 
 

@@ -42,7 +42,7 @@ export class ContactService {
 
     async add(contact: Contact) {
         this._memoryCache.push(contact)
-        await this.repository.write(this.contacts)
+        return this.repository.write(this.contacts)
     }
 
     async delete(contactId: number): Promise<void> {
