@@ -1,0 +1,53 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background: url(../img/creampaper.png) top left repeat;
+}
+
+.hero-unit {
+    background: #FFF url(../img/people_small.jpg) no-repeat 740px 40px;
+}
+
+.hero-unit h1 {
+    color: #942723;
+}
+
+.contact-card {
+    position:relative;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.contact-card .contact-card-inner {
+    /*height: 100px;*/
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #DDD;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.contact-card:before, .contact-card:after {
+    -moz-transform: rotate(-2deg);
+    -webkit-transform: rotate(-2deg);
+    bottom: 18px;
+    box-shadow: 0 15px 10px rgba(0, 0, 0, 0.7);
+    content: "";
+    height: 20%;
+    left: 10px;
+    max-width: 300px;
+    position: absolute;
+    width: 80%;
+    z-index: -2;
+}
+
+.contact-card:after {
+    -moz-transform: rotate(2deg);
+    -webkit-transform: rotate(2deg);
+    left: auto;
+    right: 10px;
+}

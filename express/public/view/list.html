@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="span4">
+        <div class="well">
+            <h2>Contacts</h2>
+
+            <form class="form-search">
+                <div class="input-append">
+                    <input type="text" class="input-medium search-query" data-ng-model="search">
+                    <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
+                </div>
+                <div data-ng-show="search">
+                    <span ng-pluralize count="filteredContacts.length" when="{'0':'No contact', '1':'One contact', 'other':'{} contacts'}"></span>
+                    for "{{search}}"
+                </div>
+                <p/>
+
+                <div>Search for: <span data-ng-bind="search"></span></div>
+            </form>
+
+            <ul class="unstyled">
+                <li data-ng-repeat="contact in filteredContacts = (contacts | filter:search | orderBy:'lastName')">
+                    <a href="#/edit/{{contact.id}}"><span data-ng-bind="contact.firstName">ANDRE</span> <span data-ng-bind="contact.lastName |uppercase">Nicolas</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="span8">
+        <div class="row">
+            <div class="contact-card span4" data-ng-repeat="contact in filteredContacts">
+                <div class="contact-card-inner">
+                    <h4><span data-ng-bind="contact.firstName">ANDRE</span> <span data-ng-bind="contact.lastName |uppercase">Nicolas</span></h4>
+
+                    <div class="contact-address" data-ng-bind="contact.address">7 impasse Taga, Londres</div>
+                    <div class="contact-phone" data-ng-bind="contact.phone">01 90 00 09 00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

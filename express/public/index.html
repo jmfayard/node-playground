@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html data-ng-app="zenContact.app">
+<head>
+    <title>ZenContacts</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+    <link href="css/zencontact.css" rel="stylesheet" media="screen">
+</head>
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="#">ZenContacts</a>
+            <ul class="nav">
+                <li data-ng-class="{active: location.path() == '/list'}">
+                    <a href="#/list">My Contacts</a>
+                </li>
+                <li data-ng-class="{active: location.path().indexOf('/edit') == 0}">
+                    <a href="#/edit">Add new contact</a>
+                </li>
+            </ul>
+            <ul class="nav pull-right">
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container" data-ng-view></div>
+
+<script src="js/angular/angular.js"></script>
+<script src="js/angular/angular-route.js"></script>
+<script src="js/angular/angular-resource.js"></script>
+<script src="js/app/app.js"></script>
+<script src="js/app/controllers.js"></script>
+<script src="js/app/services.js"></script>
+<script src="socket.io/socket.io.js"></script>
+
+</body>
+</html>

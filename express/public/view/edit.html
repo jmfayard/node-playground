@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="span12">
+        <div class="well">
+            <h2>Edit contact</h2>
+
+            <form action="" method="post" class="form-horizontal" name="contactForm">
+                <div class="control-group {{!contactForm.firstName.$error.required || 'error'}}">
+                    <label for="firstName" class="control-label">First name</label>
+
+                    <div class="controls">
+                        <input type="text" name="firstName" id="firstName" class="input-xlarge" data-ng-model="contact.firstName" required=""/><br/>
+                        <span class="help-inline" data-ng-show="contactForm.firstName.$error.required">Required</span>
+                    </div>
+                </div>
+                <div class="control-group {{!contactForm.lastName.$error.required || 'error'}}">
+                    <label for="lastName" class="control-label">Last name</label>
+
+                    <div class="controls">
+                        <input type="text" name="lastName" id="lastName" class="input-xlarge" data-ng-model="contact.lastName" required=""/><br/>
+                        <span class="help-inline" data-ng-show="contactForm.lastName.$error.required">Required</span>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label for="address" class="control-label">Address</label>
+
+                    <div class="controls">
+                        <textarea rows="3" name="address" id="address" class="input-xlarge" data-ng-model="contact.address"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="submit" value="Save" class="btn btn-primary" data-ng-click="saveContact(contact)" data-ng-disabled="contactForm.$invalid"/>
+                        <a href="#/list" class="btn btn-link">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
